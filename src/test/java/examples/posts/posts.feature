@@ -44,8 +44,14 @@ Feature: Probando karate para interactuar con posts
     And match response == postExpected
 
     Scenario: Obtener todos los comentarios de un post
-      Given path '/comments?postsId=1/'
+      Given path '/comments'
+      And param postsId = 2
       When method get
       Then status 200
-      And match response.length == 500
-      And print response
+      * def len = response.length
+      And assert len == 500
+
+    Scenario: Eliminar un post
+      Given path '/posts/9'
+      When method delete
+      Then status 200
